@@ -1,16 +1,13 @@
 package com.example.guessnumber
 
 import android.content.Context
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import android.view.WindowManager.LayoutParams.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
-import java.lang.Exception
 
 
 class MainActivity : AppCompatActivity() {
@@ -37,48 +34,37 @@ class MainActivity : AppCompatActivity() {
 
 
 
+
         textView.text = "Please enter you guess"
 
-        try {
-
-            guessBtn.setOnClickListener {
-                guessNumber = guessInputNumber.text.toString().toInt()
-                guessInputNumber.text.clear()
-                guessInputNumber.visibility = View.GONE
-                guessBtn.visibility = View.GONE
-
-                closeKeyboard()
-
-                validateBtn.setOnClickListener {
-
-                    val number: Int = editText.text.toString().toInt()
-                    if(number < guessNumber){
-                        textView.text = "You number is higher"
-                        editText.text.clear()
-                    }else if(number > guessNumber){
-                        textView.text = "You number is lower"
-                        editText.text.clear()
-                    }else{
-                        textView.text = "You was right"
-                        guessInputNumber.visibility = View.VISIBLE
-                        guessBtn.visibility = View.VISIBLE
-                    }
-                    closeKeyboard()
-                }
-            }
-        }catch ( ex:Exception){
-            println(ex.message)
+        guessBtn.setOnClickListener {
+            guessNumber = guessInputNumber.text.toString().toInt()
+            guessInputNumber.text.clear()
+            closeKeyboard()
         }
+
+        validateBtn.setOnClickListener {
+            val number: Int = editText.text.toString().toInt()
+            if(number < guessNumber){
+                textView.text = "You number is higher"
+                editText.text.clear()
+            }else if(number > guessNumber){
+                textView.text = "You number is lower"
+                editText.text.clear()
+            }else{
+                textView.text = "You was right"
+            }
+            closeKeyboard()
+        }
+
     }
 
     private fun closeKeyboard() {
-        val view = this.currentFocus
+        val view = this.currentFocus;
         if (view != null) {
             val hideMe =  getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             hideMe.hideSoftInputFromWindow(view.windowToken,0)
         }
         window.setSoftInputMode(SOFT_INPUT_STATE_ALWAYS_HIDDEN)
     }
-
-
 }
