@@ -30,7 +30,9 @@ class GuessActivity : AppCompatActivity() {
         validateBtn = findViewById(R.id.submitBtn)
 
 
-         guessNumber = intent.getStringExtra("number")!!.toInt();
+        val mIntent = intent
+        guessNumber= mIntent.getIntExtra("number", 0)
+
 
 
 
